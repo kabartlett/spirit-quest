@@ -29,9 +29,9 @@
 	class Database extends mysqli
 	{
 		private $dbhost = 'localhost';
-		private $dbuser = 'root';
-		private $dbpass = 'toor';
-		private $dbname = 'testdb';
+		private $dbuser = 'theuser@localhost';
+		private $dbpass = 'thepassword';
+		private $dbname = 'thedbname';
 
 		public function __construct()
 		{
@@ -93,6 +93,15 @@
 			$row = $result->fetch_assoc();
 			$db->close();
 			return $row['requirements'];
+		}
+
+		public static function save($id, $label, $field, $value)
+		{
+			$db = new Database();
+			$query = "UPDATE $label SET " . $field .  "=" . $value . " WHERE id='" . $id . "'";
+			$result = $db->query($query);
+				
+			$db->close();
 		}
 	}
 ?>
