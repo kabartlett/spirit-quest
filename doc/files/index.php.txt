@@ -1,40 +1,23 @@
-
-<?php
-	include("quest.php");
-	
-	$quest = new MultipleChoiceQuest(array (
-		'active'=>TRUE,
-		'visible'=>TRUE,
-		'question'=>'What color is the sky on a clear day?',
-		'answers'=>array (
-			'0'=>'Blue',
-			'1'=>'Green'
-		),
-		'correctIndex'=>'0',
-	));
-	
-	echo ($quest->getQuestion(). "\n");
-	foreach($quest->getAnswers() as $key => $value)
-	{
-		echo ($key . ": " . $value . "\n");
-	}
-
-	echo ("\nChoosing '1'...\n");
-	$quest->setUserIndex('1');
-	$quest->validate();
-
-	if ($quest->isComplete())
-		echo ("Quest Complete\n");
-	else
-		echo ("Quest Incomplete\n");
-
-	echo ("\nChoosing '0'...\n");
-	$quest->setUserIndex('0');
-	$quest->validate();
-	if ($quest->isComplete())
-		echo ("Quest Complete\n");
-	else
-		echo ("Quest Incomplete\n");
-	
-?>
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        <?php
+            session_start();
+            $_SESSION = array();
+            session_destroy();
+        ?>
+        <div id="viewport">
+            <div style="width: 100%; text-align: center;">
+                <img alt="Logo" src="images/logo.jpg" style="max-width: 360px; height: auto; padding: 1em;"/>
+            </div>
+            <form action="game.php" method="post">
+                <p><input type="text" name="username" placeholder="Username"/></p>
+                <p><input class="button" type="submit" value="Submit"/></p>
+            </form>
+        </div>
+    </body>
+</html>
 
