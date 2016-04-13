@@ -48,14 +48,19 @@
 
 		public function html()
 		{
-			parent::html();
+			echo("<h1>" . $this->getName() . "</h1>\n");
+			echo("<p><em>Completing this questline awards an additional "
+			     . $this->getReward() . " spirit.</em></p>\n");
+			echo("<p>" . $this->getObjective() . "</p>\n");
 			echo("<div class='questlist'>\n");
 			echo("<ul>\n");
 			foreach ($this->quests as $key => $value)
 				if ($value->isComplete())
-					echo("<li class='complete'>" . $value->getObjective() . "</li>\n");
+					echo("<li class='complete' onclick='forward(\""
+						. $key . "\")'>" . $value->getName() . " (COMPLETE) </li>\n");
 				else
-					echo("<li>" . $value->getObjective() . "</li>\n");
+					echo("<li onclick='forward(\""
+						. $key . "\")'>" . $value->getName() . "</li>\n");
 			echo("</ul>\n");
 			echo("</div>\n");
 		}

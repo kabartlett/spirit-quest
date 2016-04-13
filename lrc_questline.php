@@ -34,12 +34,12 @@
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="Visit"');
+            $row_c = Database::getRow('LRC', 'label="Visit"');
             $row_v = Database::getQuestRow(
                 'LRC_Visit', '' . $id,
                 'active, complete, visible', '1, 0, 1');
             parent::__construct(array
-            (   'name'=>'Visit',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
@@ -48,6 +48,14 @@
                 'question'=>$row_c['question'],
                 'verificationString'=>$row_c['answer']
             ));
+        }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_Visit", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_Visit", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_Visit", "visible", $bin[$this->isVisible()]);
         }
     }
 
@@ -55,12 +63,12 @@
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="GetPlanner"');
+            $row_c = Database::getRow('LRC', 'label="GetPlanner"');
             $row_v = Database::getQuestRow(
                 'LRC_GetPlanner', '' . $id,
                 'active, complete, visible', '1, 0, 1');
             parent::__construct(array
-            (   'name'=>'GetPlanner',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
@@ -69,6 +77,14 @@
                 'question'=>$row_c['question'],
                 'verificationString'=>$row_c['answer']
             ));
+        }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_GetPlanner", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_GetPlanner", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_GetPlanner", "visible", $bin[$this->isVisible()]);
         }
     }
 
@@ -76,12 +92,12 @@
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="SayingOnWall"');
+            $row_c = Database::getRow('LRC', 'label="SayingOnWall"');
             $row_v = Database::getQuestRow(
                 'LRC_SayingOnWall', '' . $id,
                 'active, complete, visible', '1, 0, 1');
             parent::__construct(array
-            (   'name'=>'SayingOnWall',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
@@ -90,6 +106,14 @@
                 'question'=>$row_c['question'],
                 'verificationString'=>$row_c['answer']
             ));
+        }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_SayingOnWall", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_SayingOnWall", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_SayingOnWall", "visible", $bin[$this->isVisible()]);
         }
     }
 
@@ -97,12 +121,12 @@
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="VisitWritingCenter"');
+            $row_c = Database::getRow('LRC', 'label="VisitWritingCenter"');
             $row_v = Database::getQuestRow(
                 'LRC_VisitWritingCenter', '' . $id,
                 'active, complete, visible', '1, 0, 1');
             parent::__construct(array
-            (   'name'=>'VisitWritingCenter',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
@@ -111,6 +135,14 @@
                 'question'=>$row_c['question'],
                 'verificationString'=>$row_c['answer']
             ));
+        }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_VisitWritingCenter", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_VisitWritingCenter", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_VisitWritingCenter", "visible", $bin[$this->isVisible()]);
         }
     }
 
@@ -118,12 +150,12 @@
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="VisitLRCMathLab"');
+            $row_c = Database::getRow('LRC', 'label="VisitLRCMathLab"');
             $row_v = Database::getQuestRow(
                 'LRC_VisitLRCMathLab', '' . $id,
                 'active, complete, visible', '1, 0, 1');
             parent::__construct(array
-            (   'name'=>'VisitLRCMathLab',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
@@ -133,25 +165,43 @@
                 'verificationString'=>$row_c['answer']
             ));
         }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_VisitLRCMathLab", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_VisitLRCMathLab", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_VisitLRCMathLab", "visible", $bin[$this->isVisible()]);
+        }
     }
 
     class LRC_TypesOfCoaching extends ParticipationTextQuest
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="TypesOfCoaching"');
+            $row_c = Database::getRow('LRC', 'label="TypesOfCoaching"');
             $row_v = Database::getQuestRow(
                 'LRC_TypesOfCoaching', '' . $id,
                 'active, complete, visible', '1, 0, 1');
             parent::__construct(array
-            (   'name'=>'TypesOfCoaching',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
                 'objective'=>$row_c['objective'],
                 'reward'=>$row_c['reward'],
-                'question'=>$row_c['question']
+                'question'=>$row_c['question'],
+		'userAnswer'=>$row_v['answer']
             ));
+        }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_TypesOfCoaching", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_TypesOfCoaching", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_TypesOfCoaching", "visible", $bin[$this->isVisible()]);
+            Database::save($id, "LRC_TypesOfCoaching", "answer", '"' . $this->getUserAnswer() . '"');
         }
     }
 
@@ -159,19 +209,29 @@
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="Appointment"');
+            $row_c = Database::getRow('LRC', 'label="Appointment"');
             $row_v = Database::getQuestRow(
                 'LRC_Appointment', '' . $id,
                 'active, complete, visible', '1, 0, 1');
             parent::__construct(array
-            (   'name'=>'Appointment',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
                 'objective'=>$row_c['objective'],
                 'reward'=>$row_c['reward'],
-                'question'=>$row_c['question']
+                'question'=>$row_c['question'],
+		'userAnswer'=>$row_v['answer']
             ));
+        }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_Appointment", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_Appointment", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_Appointment", "visible", $bin[$this->isVisible()]);
+            Database::save($id, "LRC_Appointment", "answer", '"' . $this->getUserAnswer() . '"');
         }
     }
 
@@ -179,12 +239,12 @@
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="TopicsOfACC"');
+            $row_c = Database::getRow('LRC', 'label="TopicsOfACC"');
             $row_v = Database::getQuestRow(
                 'LRC_TopicsOfACC', '' . $id,
                 'active, complete, visible, currentIndex', '1, 0, 1, 0');
             parent::__construct(array
-            (   'name'=>'TopicsOfACC',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
@@ -192,8 +252,23 @@
                 'maxRepetitions'=>$row_c['maxRepetitions'],
                 'objective'=>$row_c['objective'],
                 'reward'=>$row_c['reward'],
-                'question'=>$row_c['question']
+                'question'=>$row_c['question'],
+                'answer0'=>$row_v['answer0'],
+                'answer1'=>$row_v['answer1'],
+                'answer2'=>$row_v['answer2'],
+                'answer3'=>$row_v['answer3']
             ));
+        }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_TopicsOfACC", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_TopicsOfACC", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_TopicsOfACC", "visible", $bin[$this->isVisible()]);
+            Database::save($id, "LRC_TopicsOfACC", "currentIndex", $this->getCurrentIndex());
+            for ($i = 0; $i < $this->getCurrentIndex() && $i < $this->maxRepetitions; $i++)
+                Database::save($id, "LRC_TopicsOfACC", "answer" . $i, '"' . $this->userAnswers[$i] . '"');
         }
     }
 
@@ -201,12 +276,12 @@
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="WednesdayWorkshop"');
+            $row_c = Database::getRow('LRC', 'label="WednesdayWorkshop"');
             $row_v = Database::getQuestRow(
                 'LRC_WednesdayWorkshop', '' . $id,
                 'active, complete, visible, currentIndex', '1, 0, 1, 0');
             parent::__construct(array
-            (   'name'=>'WednesdayWorkshop',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
@@ -214,8 +289,22 @@
                 'maxRepetitions'=>$row_c['maxRepetitions'],
                 'objective'=>$row_c['objective'],
                 'reward'=>$row_c['reward'],
-                'question'=>$row_c['question']
+                'question'=>$row_c['question'],
+                'answer0'=>$row_v['answer0'],
+                'answer1'=>$row_v['answer1'],
+                'answer2'=>$row_v['answer2']
             ));
+        }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_WednesdayWorkshop", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_WednesdayWorkshop", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_WednesdayWorkshop", "visible", $bin[$this->isVisible()]);
+            Database::save($id, "LRC_WednesdayWorkshop", "currentIndex", $this->getCurrentIndex());
+            for ($i = 0; $i < $this->getCurrentIndex() && $i < $this->maxRepetitions; $i++)
+                Database::save($id, "LRC_WednesdayWorkshop", "answer" . $i, '"' . $this->userAnswers[$i] . '"');
         }
     }
 
@@ -226,12 +315,12 @@
     {
         public function __construct($id)
         {
-            $row_c = Database::getRow('LRC', 'name="LRC_Quest"');
+            $row_c = Database::getRow('LRC', 'label="LRC_Quest"');
             $row_v = Database::getQuestRow(
                 'LRC_Quest', '' . $id,
                 'active, complete, visible', '1, 0, 1');
             parent::__construct(array
-            (   'name'=>'LRC',
+            (   'name'=>$row_c['name'],
                 'active'=>$row_v['active'],
                 'complete'=>$row_v['complete'],
                 'visible'=>$row_v['visible'],
@@ -253,14 +342,28 @@
 
         public function validate(&$user)
         {
+            if ($this->isComplete()) return FALSE;
             foreach($this->quests as $key => $value)
-			{
-				if (!$this->quests[$key]->isComplete())
-					return FALSE;
-			}
-			$this->complete = TRUE;
-			$this->active = FALSE;
-			return TRUE;
+            {
+                if (!$this->quests[$key]->isComplete())
+                    return FALSE;
+            }
+            $user->addSpirit($this->getReward());
+            $this->complete = TRUE;
+            $this->active = FALSE;
+            return TRUE;
+        }
+
+        public function submit($answer)
+        {
+        }
+
+        public function save($id)
+        {
+            $bin = array("0", "1");
+            Database::save($id, "LRC_Quest", "active", $bin[$this->isActive()]);
+            Database::save($id, "LRC_Quest", "complete", $bin[$this->isComplete()]);
+            Database::save($id, "LRC_Quest", "visible", $bin[$this->isVisible()]);
         }
     }
 ?>

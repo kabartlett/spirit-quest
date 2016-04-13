@@ -29,9 +29,9 @@
 	class Database extends mysqli
 	{
 		private $dbhost = 'localhost';
-		private $dbuser = 'theuser@localhost';
-		private $dbpass = 'thepassword';
-		private $dbname = 'thedbname';
+		private $dbuser = 'spirit@localhost';
+		private $dbpass = 'sp1r1t';
+		private $dbname = 'spirit_dev';
 
 		public function __construct()
 		{

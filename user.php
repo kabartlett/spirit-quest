@@ -27,7 +27,7 @@
  */
 
 
- 	include_once('database.php');
+    include_once('database.php');
     include_once('lrc_questline.php');
     include_once('badge.php');
 
@@ -35,7 +35,7 @@
     {
         private $id;
         private $name;
-		private $username;
+        private $username;
         private $spirit;
         public $quests;
         public $badges;
@@ -68,9 +68,19 @@
             $this->spirit += $amount;
         }
 
+        public function getFirstName()
+        {
+            return strtok($this->name, " ");
+        }
+
         public function getId() { return $this->id; }
         public function getName() { return $this->name; }
         public function getUsername() { return $this->username; }
         public function getSpirit() { return $this->spirit; }
+
+	public function save()
+	{
+		Database::save($this->getId(), "User", "spirit", (int)$this->getSpirit());
+	}
     }
 ?>

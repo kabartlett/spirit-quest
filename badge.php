@@ -43,6 +43,15 @@
             $this->label = $label;
         }
 
+        public function save(&$user)
+        {
+            $bin = array("0", "1");
+            $db = new Database();
+            $db->query("UPDATE Badge set " . $this->label . "=" . $bin[$this->achieved]
+                . " WHERE id='" . $user->getId() . "'");
+            $db->close();
+        }
+
         public function getName() { return $this->name; }
         public function getRequirements() { return $this->requirements; }
         public function isAchieved() { return $this->achieved; }
@@ -63,9 +72,10 @@
 
         public function validate(&$user)
         {
-            if (!$this->achieved && $user->getSpirit() >= 20)
+            if ((int)$this->achieved === 0 && (int)$user->getSpirit() >= 20)
             {
-                $this->achieved = TRUE;
+                $this->achieved = 1;
+                $this->save($user);
                 return TRUE;
             }
             else return FALSE;

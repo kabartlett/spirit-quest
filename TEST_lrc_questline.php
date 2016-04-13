@@ -29,9 +29,9 @@
     include_once('lrc_questline.php');
     include_once('user.php');
 
-    $yn = ["No", "Yes"];
+    $yn = array("No", "Yes");
 
-    $user = new User("00000009");
+    $user = new User("00000000");
     echo($user->getId() . "\n");
 
     $questline = $user->quests['LRC'];
