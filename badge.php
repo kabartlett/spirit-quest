@@ -26,38 +26,49 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-	include("quest.php");
+    include_once('database.php');
 
-	/**
-	 *	QuestLine is a template that acts like a Quest, but contains
-	 *	other quests.
-	 */
-	abstract class QuestLine extends Quest
-	{
-		public $quests = array();
+    abstract class Badge
+    {
+        protected $name;
+        protected $achieved;
+        protected $requirements;
+        protected $label;
 
-		/**
-		 *	@params array $array contains instance variables indexed
-		 *	 	by name.
-		 */
-		public function __construct($array)
-		{
-			parent::__construct($array);
-			$this->quests = Quest::_getField($array, 'quests');
-		}
+        public function __construct($name, $achieved, $requirements, $label)
+        {
+            $this->name = $name;
+            $this->achieved = $achieved;
+            $this->requirements = $requirements;
+            $this->label = $label;
+        }
 
-		public function html()
-		{
-			parent::html();
-			echo("<div class='questlist'>\n");
-			echo("<ul>\n");
-			foreach ($this->quests as $key => $value)
-				if ($value->isComplete())
-					echo("<li class='complete'>" . $value->getObjective() . "</li>\n");
-				else
-					echo("<li>" . $value->getObjective() . "</li>\n");
-			echo("</ul>\n");
-			echo("</div>\n");
-		}
-	}
+        public function getName() { return $this->name; }
+        public function getRequirements() { return $this->requirements; }
+        public function isAchieved() { return $this->achieved; }
+
+        abstract function validate(&$user);
+    }
+
+    class SeaPup_Badge extends Badge
+    {
+        public function __construct($id)
+        {
+            $name = "Sea Pup";
+            $label = "SeaPup";
+            $achieved = Database::getBadgeState($id, $label);
+            $requirements = Database::getBadgeRequirements($label);
+            parent::__construct($name, $achieved, $requirements, $label);
+        }
+
+        public function validate(&$user)
+        {
+            if (!$this->achieved && $user->getSpirit() >= 20)
+            {
+                $this->achieved = TRUE;
+                return TRUE;
+            }
+            else return FALSE;
+        }
+    }
 ?>

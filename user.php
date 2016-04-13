@@ -26,38 +26,51 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-	include("quest.php");
 
-	/**
-	 *	QuestLine is a template that acts like a Quest, but contains
-	 *	other quests.
-	 */
-	abstract class QuestLine extends Quest
-	{
-		public $quests = array();
+ 	include_once('database.php');
+    include_once('lrc_questline.php');
+    include_once('badge.php');
 
-		/**
-		 *	@params array $array contains instance variables indexed
-		 *	 	by name.
+    class User
+    {
+        private $id;
+        private $name;
+		private $username;
+        private $spirit;
+        public $quests;
+        public $badges;
+
+        /**
+		 *	Ensures a field exists in an array before retrieving it.
+		 *
+		 *	@throws Exception
 		 */
-		public function __construct($array)
+		protected static function _getField($array, $key)
 		{
-			parent::__construct($array);
-			$this->quests = Quest::_getField($array, 'quests');
+			if (array_key_exists($key, $array)) return $array[$key];
+			else throw new Exception(Quest::errorMessage);
 		}
 
-		public function html()
-		{
-			parent::html();
-			echo("<div class='questlist'>\n");
-			echo("<ul>\n");
-			foreach ($this->quests as $key => $value)
-				if ($value->isComplete())
-					echo("<li class='complete'>" . $value->getObjective() . "</li>\n");
-				else
-					echo("<li>" . $value->getObjective() . "</li>\n");
-			echo("</ul>\n");
-			echo("</div>\n");
-		}
-	}
+        public function __construct($id)
+        {
+			$row = Database::getRow('User',  'id="' . $id .'"');
+            if (!$row) die('User ' . $id . " does not exist.\n");
+            $this->id = $id;
+			$this->name = $row['name'];
+            $this->username = $row['username'];
+			$this->spirit = $row['spirit'];
+            $this->quests = array('LRC'=>new LRC_QuestLine($id));
+            $this->badges = array('SeaPup'=>new SeaPup_Badge($id));
+        }
+
+        public function addSpirit($amount)
+        {
+            $this->spirit += $amount;
+        }
+
+        public function getId() { return $this->id; }
+        public function getName() { return $this->name; }
+        public function getUsername() { return $this->username; }
+        public function getSpirit() { return $this->spirit; }
+    }
 ?>

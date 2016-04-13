@@ -1,4 +1,5 @@
 <?php
+
 /**
  * UAA Spirit Quest
  * Copyright (c) 2016, Kevin Bartlett
@@ -27,37 +28,41 @@
  */
 
 	include("quest.php");
-
-	/**
-	 *	QuestLine is a template that acts like a Quest, but contains
-	 *	other quests.
-	 */
-	abstract class QuestLine extends Quest
+	
+	$quest = new MultipleChoiceQuest(array (
+		'active'=>TRUE,
+		'visible'=>TRUE,
+		'question'=>'What color is the sky on a clear day?',
+		'answers'=>array (
+			'0'=>'Blue',
+			'1'=>'Green'
+		),
+		'correctIndex'=>'0',
+	));
+	
+	echo ($quest->getQuestion(). "\n");
+	foreach($quest->getAnswers() as $key => $value)
 	{
-		public $quests = array();
-
-		/**
-		 *	@params array $array contains instance variables indexed
-		 *	 	by name.
-		 */
-		public function __construct($array)
-		{
-			parent::__construct($array);
-			$this->quests = Quest::_getField($array, 'quests');
-		}
-
-		public function html()
-		{
-			parent::html();
-			echo("<div class='questlist'>\n");
-			echo("<ul>\n");
-			foreach ($this->quests as $key => $value)
-				if ($value->isComplete())
-					echo("<li class='complete'>" . $value->getObjective() . "</li>\n");
-				else
-					echo("<li>" . $value->getObjective() . "</li>\n");
-			echo("</ul>\n");
-			echo("</div>\n");
-		}
+		echo ($key . ": " . $value . "\n");
 	}
+
+	echo ("\nChoosing '1'...\n");
+	$quest->setUserIndex('1');
+	$quest->validate();
+
+	if ($quest->isComplete())
+		echo ("Quest Complete\n");
+	else
+		echo ("Quest Incomplete\n");
+
+	echo ("\nChoosing '0'...\n");
+	$quest->setUserIndex('0');
+	$quest->validate();
+	if ($quest->isComplete())
+		echo ("Quest Complete\n");
+	else
+		echo ("Quest Incomplete\n");
+	
+	echo ("\n");
+
 ?>

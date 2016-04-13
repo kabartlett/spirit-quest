@@ -1,4 +1,5 @@
 <?php
+
 /**
  * UAA Spirit Quest
  * Copyright (c) 2016, Kevin Bartlett
@@ -28,9 +29,6 @@
 
 	include("questline.php");
 
-	/**
-	 *	An example MultipleChoiceQuest.
-	 */
 	class SkyQuest extends MultipleChoiceQuest
 	{
 		public function __construct()
@@ -39,7 +37,6 @@
 			(	'active'=>TRUE,
 				'complete'=>FALSE,
 				'visible'=>TRUE,
-				'objective'=>'Answer the question',
 				'question'=>'What color is the sky on a clear day?',
 				'answers'=>array(
 					'0'=>'Green',
@@ -50,9 +47,6 @@
 		}
 	}
 
-	/**
-	 *	An example MultipleChoiceQuest.
-	 */
 	class NightSkyQuest extends MultipleChoiceQuest
 	{
 		public function __construct()
@@ -61,7 +55,6 @@
 			(	'active'=>TRUE,
 				'complete'=>FALSE,
 				'visible'=>TRUE,
-				'objective'=>'Answer the question',
 				'question'=>'What color is the sky on a cloudy night?',
 				'answers'=>array(
 					'0'=>'Black',
@@ -72,10 +65,7 @@
 		}
 	}
 
-	/**
-	 *	An example QuestLine.
-	 */
-	class TestQuestLine extends QuestLine
+	class ExampleQuestLine extends QuestLine
 	{
 		public function __construct()
 		{
@@ -84,7 +74,6 @@
 				'active'=>TRUE,
 				'complete'=>FALSE,
 				'visible'=>TRUE,
-				'objective'=>'Complete all quests.',
 				'quests'=>array(
 					0=>new SkyQuest(),
 					1=>new NightSKyQuest()
@@ -92,9 +81,6 @@
 			));
 		}
 
-		/**
-		 *	Quest is only complete when all subquests are.
-		 */
 		public function validate()
 		{
 			foreach($this->quests as $key => $value)
@@ -109,7 +95,7 @@
 		}
 	}
 
-	$questline = new TestQuestLine();
+	$questline = new ExampleQuestLine();
 	$quests = $questline->getQuests();
 
 	foreach($quests as $key => $value)
@@ -119,33 +105,17 @@
 		{
 			echo($akey . " : " . $avalue . "\n");
 		}
-		echo("\n");
 	}
-
-	$quests[0]->setUserIndex('0');
-	$quests[0]->validate();
-	$questline->validate();
-
-	assert($quests[0]->isComplete() === FALSE);
-	assert($questline->isComplete() === FALSE);
 
 	$quests[0]->setUserIndex('1');
 	$quests[0]->validate();
-	$questline->validate();
-
-	assert($quests[0]->isComplete());
-
-	$quests[1]->setUserIndex('1');
-	$quests[1]->validate();
-	$questline->validate();
-
-	assert($quests[1]->isComplete() === FALSE);
-	assert($questline->isComplete() === FALSE);
-
 	$quests[1]->setUserIndex('0');
 	$quests[1]->validate();
 	$questline->validate();
 
-	assert($quests[1]->isComplete());
-	assert($questline->isComplete());
+	if ($questline->isComplete())
+		echo ("Questline complete\n\n");
+	else
+		echo ("Questline incomplete\n\n");
+
 ?>
